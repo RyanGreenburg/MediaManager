@@ -16,6 +16,9 @@ class MoviesHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = MoviesHomeViewModel(collectionView: collectionView)
+        Task.detached(priority: .high) {
+            await self.viewModel.fetchSectionsForView()
+        }
         collectionView.dataSource = viewModel.dataSource
         collectionView.delegate = self
         title = "Movies"
@@ -43,7 +46,7 @@ extension MoviesHomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItem = viewModel.sections[indexPath.section].items[indexPath.row]
         let vc = DetailViewController.instantiate()
-        navigationController?.pushViewController(vc, animated: true)
         vc.configureViewModel(with: selectedItem.movie)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

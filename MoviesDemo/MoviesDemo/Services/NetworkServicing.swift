@@ -12,7 +12,6 @@ enum NetworkError: Error, LocalizedError {
     case requestError(Error)
     case badURL
     case couldNotUnwrap
-    case non200Response(HTTPURLResponse)
     
     var localizedDescription: String {
         switch self {
@@ -24,32 +23,24 @@ enum NetworkError: Error, LocalizedError {
             return "Error parsing requested data"
         case .unexpectedError:
             return ""
-        case .non200Response(let response):
-            return "Non 200 Response: \(response.statusCode) ---> \(response.url!.absoluteString)"
         }
     }
 }
 
 protocol NetworkServicing {
-    func perform(_ request: URLRequest, completion: @escaping (Result<Data, NetworkError>) -> Void)
+    func perform(_ request: URLRequest) async throws -> Data
 }
 
 extension NetworkServicing {
-    func perform(_ request: URLRequest, completion: @escaping (Result<Data, NetworkError>) -> Void) {
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                print("Error in \(#function) -\n\(#file):\(#line) -\n\(error.localizedDescription) \n---\n \(error)")
-                completion(.failure(.unexpectedError))
-            }
-            
-            guard let data = data else {
-                completion(.failure(.unexpectedError))
-                return
-            }
-            DispatchQueue.main.async {
-                completion(.success(data))
-            }
-        }.resume()
+    func perform(_ request: URLRequest) async throws -> Data {
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        if let response = response as? HTTPURLResponse {
+            print("\(response.statusCode)")
+        }
+        
+        return data
     }
 }
 

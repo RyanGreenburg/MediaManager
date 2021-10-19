@@ -11,7 +11,13 @@ class DetailViewController: UIViewController, StoryboardInstantiable {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
-    var viewModel: DetailViewModel!
+    var viewModel: DetailViewModel! {
+        didSet {
+            Task.detached(priority: .high) {
+                await self.viewModel.performRequests()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +26,5 @@ class DetailViewController: UIViewController, StoryboardInstantiable {
 
     func configureViewModel(with movie: Movie) {
         viewModel = DetailViewModel(movie: movie)
-        viewModel.performRequests()
     }
 }

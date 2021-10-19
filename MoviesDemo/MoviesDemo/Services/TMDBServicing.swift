@@ -64,25 +64,19 @@ enum TMDBEndpoint: Hashable {
 }
 
 struct TMDBService: NetworkServicing {
-    func fetch<T: Decodable>(_ type: T.Type,
-                             from endpoint: TMDBEndpoint,
-                             completion: @escaping (Result<T, NetworkError>) -> Void) {
+    func fetch<T: Decodable>(_ type: T.Type, from endpoint: TMDBEndpoint) async throws -> T? {
         guard let url = endpoint.url else {
-            completion(.failure(.badURL))
-            return
+            throw NetworkError.badURL
         }
         
-        perform(URLRequest(url: url)) { result in
-            switch result {
-            case .success(let data):
-                guard let decodedObject = data.decode(type: type) else {
-                    completion(.failure(.couldNotUnwrap))
-                    return
-                }
-                completion(.success(decodedObject))
-            case .failure(let error):
-                print("Error in \(#function) -\n\(#file):\(#line) -\n\(error.localizedDescription) \n---\n \(error)")
+        do {
+            let data = try await perform(URLRequest(url: url))
+            guard let object = data.decode(type: type) else {
+                throw NetworkError.couldNotUnwrap
             }
+            return object
+        } catch {
+            throw error
         }
     }
 }

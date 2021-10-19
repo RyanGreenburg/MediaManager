@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+@MainActor
 class MoviesHomeViewModel {
     struct Section: Hashable {
         let type: TMDBEndpoint
@@ -42,31 +42,27 @@ class MoviesHomeViewModel {
     
     init(collectionView: UICollectionView) {
         dataSource = MoviesHomeDataSource(collectionView: collectionView)
-        fetchSectionsForView()
     }
     
-    func fetchSectionsForView() {
-        fetch(.popular)
-        fetch(.topRated)
-        fetch(.nowPlaying)
-        fetch(.upcoming)
-        
-        activeGroup.notify(queue: .main) {
-            self.dataSource.setData(self.sections)
-        }
+    func fetchSectionsForView() async {
+        await fetch(.popular)
+        await fetch(.topRated)
+        await fetch(.nowPlaying)
+        await fetch(.upcoming)
+        dataSource.setData(sections)
     }
     
-    private func fetch(_ endpoint: TMDBEndpoint) {
+    private func fetch(_ endpoint: TMDBEndpoint) async {
         activeGroup.enter()
-        tmdbService.fetch(MovieList.self, from: endpoint) { [weak self] result in
-            switch result {
-            case .success(let list):
-                let movies = list.results.map { WrappedMovie(movie: $0) }
-                self?.sections.append(Section(type: endpoint, items: movies))
-            case .failure(let error):
-                print("Error in \(#function) -\n\(#file):\(#line) -\n\(error.localizedDescription) \n---\n \(error)")
+        
+        do {
+            let list = try await tmdbService.fetch(MovieList.self, from: endpoint)
+            if let list = list {
+                let section = Section(type: endpoint, items: list.results.map { WrappedMovie(movie: $0) })
+                self.sections.append(section)
             }
-            self?.activeGroup.leave()
+        } catch {
+            print("Error in \(#function) -\n\(#file):\(#line) -\n\(error.localizedDescription) \n---\n \(error)")
         }
     }
 }
