@@ -1,0 +1,86 @@
+
+
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/70nxSw3mFBsGmtkvcs91PbjerwD.jpg",
+            "genre_ids": [
+                878,
+                28
+            ],
+            "id": 580489,
+            "original_language": "en",
+            "original_title": "Venom: Let There Be Carnage",
+            "overview": "After finding a host body in investigative reporter Eddie Brock, the alien symbiote must face a new enemy, Carnage, the alter ego of serial killer Cletus Kasady.",
+            "popularity": 9322.826,
+            "poster_path": "/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
+            "release_date": "2021-09-30",
+            "title": "Venom: Let There Be Carnage",
+            "video": false,
+            "vote_average": 7,
+            "vote_count": 786
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/VuukZLgaCrho2Ar8Scl9HtV3yD.jpg",
+            "genre_ids": [
+                878,
+                28
+            ],
+            "id": 335983,
+            "original_language": "en",
+            "original_title": "Venom",
+            "overview": "Investigative journalist Eddie Brock attempts a comeback following a scandal, but accidentally becomes the host of Venom, a violent, super powerful alien symbiote. Soon, he must rely on his newfound powers to protect the world from a shadowy organization looking for a symbiote of their own.",
+            "popularity": 5020.403,
+            "poster_path": "/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
+            "release_date": "2018-09-28",
+            "title": "Venom",
+            "video": false,
+            "vote_average": 6.8,
+            "vote_count": 11815
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/8Y43POKjjKDGI9MH89NW0NAzzp8.jpg",
+            "genre_ids": [
+                35,
+                28,
+                12,
+                878
+            ],
+            "id": 550988,
+            "original_language": "en",
+            "original_title": "Free Guy",
+            "overview": "A bank teller called Guy realizes he is a background character in an open world video game called Free City that will soon go offline.",
+            "popularity": 4706.977,
+            "poster_path": "/xmbU4JTUm8rsdtn7Y3Fcm30GpeT.jpg",
+            "release_date": "2021-08-11",
+            "title": "Free Guy",
+            "video": false,
+            "vote_average": 7.8,
+            "vote_count": 2877
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/mDTrJbn2YEzYrBsdu7ITKh3ef69.jpg",
+            "genre_ids": [
+                28,
+                35,
+                12
+            ],
+            "id": 772436,
+            "original_language": "es",
+            "original_title": "Matando Cabos 2, La Máscara del Máscara",
+            "overview": "Faced with the unexpected death of his estranged father -El Máscara- and the subsequent theft of his precious mask, Rubén -Mascarita- will find himself confronted with his past. Alongside his invincible bodyguard Tony \"The Cannibal\" and, an unexpected ally, he will have only one day to recover it and make amends with the memory of his father.",
+            "popularity": 2795.85,
+            "poster_path": "/ycKNJTFOLN5qRtA7uI2yk2cE3eU.jpg",
+            "release_date": "2021-10-01",
+            "title": "Matando Cabos 2, La Máscara del Máscara",
+            "video": false,
+            "vote_average": 7.4,
+            "vote_count": 30
+        }
+    ]
+}

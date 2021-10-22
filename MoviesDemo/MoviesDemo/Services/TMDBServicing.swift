@@ -63,7 +63,11 @@ enum TMDBEndpoint: Hashable {
     }
 }
 
-struct TMDBService: NetworkServicing {
+protocol TMDBServicing {
+    func fetch<T: Decodable>(_ type: T.Type, from endpoint: TMDBEndpoint) async throws -> T?
+}
+
+struct TMDBService: NetworkServicing, TMDBServicing {
     func fetch<T: Decodable>(_ type: T.Type, from endpoint: TMDBEndpoint) async throws -> T? {
         guard let url = endpoint.url else {
             throw NetworkError.badURL

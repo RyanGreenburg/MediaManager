@@ -34,14 +34,14 @@ class MoviesHomeViewModel {
         let id = UUID()
     }
     
-    private var activeGroup = DispatchGroup()
-    private let tmdbService = TMDBService()
+    private let tmdbService: TMDBServicing
     
     var sections: [Section] = []
     var dataSource: MoviesHomeDataSource
     
-    init(collectionView: UICollectionView) {
+    init(collectionView: UICollectionView, service: TMDBServicing = TMDBService()) {
         dataSource = MoviesHomeDataSource(collectionView: collectionView)
+        tmdbService = service
     }
     
     func fetchSectionsForView() async {
@@ -52,9 +52,7 @@ class MoviesHomeViewModel {
         dataSource.setData(sections)
     }
     
-    private func fetch(_ endpoint: TMDBEndpoint) async {
-        activeGroup.enter()
-        
+    private func fetch(_ endpoint: TMDBEndpoint) async {        
         do {
             let list = try await tmdbService.fetch(MovieList.self, from: endpoint)
             if let list = list {
